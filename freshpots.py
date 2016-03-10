@@ -3,7 +3,7 @@
 # Play freshpots.wav when you press a button on your Raspberry Pi
 # Second button is delayed 6m which is how long our coffee maker takes,
 # and then curls a notification to our Slack channel
-# 
+#
 # Original code ripped from MAKE Magazine soundboard tutorial
 #
 
@@ -14,6 +14,7 @@ from time import sleep
 import RPi.GPIO as GPIO
 from sys import exit
 import os
+import random
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(23, GPIO.IN)
@@ -24,7 +25,12 @@ GPIO.setup(25, GPIO.OUT)
 pygame.mixer.init(48000, -16, 1, 1024)
 
 # Setup our samples
-sound = pygame.mixer.Sound("/home/pi/freshpots/freshpot1.wav")
+here = os.path.dirname(os.path.realpath(__file__))
+sounds = [
+    pygame.mixer.Sound(here + "/freshpot1.wav"),
+    pygame.mixer.Sound(here + "/freshpot2.wav"),
+    pygame.mixer.Sound(here + "/freshpot3.wav")
+  ]
 soundChannel = pygame.mixer.Channel(1)
 
 def post_to_slack():
@@ -32,18 +38,20 @@ def post_to_slack():
   # print string
   os.system(string)
   print
-  
+
 print "Soundboard ready!"
+print "FRESHPOTS_HOOK_URL=" + FRESHPOTS_HOOK_URL
 GPIO.output(25, False)
 
 while True:
   try:
-    if (GPIO.input(23) == True):
+    # if (GPIO.input(23) == True):
+    if True:
       print "Testing fresh pots!!!!"
       GPIO.output(25, True)
-      soundChannel.play(sound)
-      # post_to_slack()
+      soundChannel.play(random.choice(sounds))
       GPIO.output(25, False)
+      # post_to_slack()
 
     if (GPIO.input(24) == True):
       print "Sleeping for 6 minutes while coffee brews..."
@@ -51,8 +59,8 @@ while True:
       sleep(360)
       print "Fresh pots!!!!!!"
       soundChannel.play(sound)
-      post_to_slack()
       GPIO.output(25, False)
+      post_to_slack()
 
     sleep(0.01)
   except KeyboardInterrupt:
