@@ -68,7 +68,7 @@ while True:
     if (GPIO.input(24) == True):
       print "Fresh pots started! Sleeping for 6 minutes while coffee brews..."
       led_on()
-      # sleep(360)
+      sleep(360)
       print "Fresh pots!!!!!!"
       play_sound()
       led_off()
