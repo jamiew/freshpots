@@ -44,25 +44,34 @@ def post_to_slack():
   os.system(string)
   print
 
+def play_sound():
+  soundChannel.play(random.choice(sounds))
+
+def led_on():
+  GPIO.output(25, True)
+
+def led_off():
+  GPIO.output(25, False)
+
 print "Soundboard ready!"
-GPIO.output(25, False)
+led_off()
 
 while True:
   try:
     if (GPIO.input(23) == True):
       print "Testing fresh pots!!!!"
-      GPIO.output(25, True)
-      soundChannel.play(random.choice(sounds))
-      GPIO.output(25, False)
+      led_on()
+      play_sound()
+      led_off()
       # post_to_slack()
 
     if (GPIO.input(24) == True):
-      print "Sleeping for 6 minutes while coffee brews..."
-      GPIO.output(25, True)
-      sleep(360)
+      print "Fresh pots started! Sleeping for 6 minutes while coffee brews..."
+      led_on()
+      # sleep(360)
       print "Fresh pots!!!!!!"
-      soundChannel.play(sound)
-      GPIO.output(25, False)
+      play_sound()
+      led_off()
       post_to_slack()
 
     sleep(0.01)
