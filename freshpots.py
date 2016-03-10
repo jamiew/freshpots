@@ -45,8 +45,7 @@ GPIO.output(25, False)
 
 while True:
   try:
-    # if (GPIO.input(23) == True):
-    if True:
+    if (GPIO.input(23) == True):
       print "Testing fresh pots!!!!"
       GPIO.output(25, True)
       soundChannel.play(random.choice(sounds))
