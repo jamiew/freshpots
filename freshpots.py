@@ -39,7 +39,8 @@ def post_to_slack():
   if freshpots_hook_url == None:
     print "FRESHPOTS_HOOK_URL not set, skipping Slack notification"
     return
-  string = 'curl -X POST -H "Content-type: application/json" --data \'{"text": "FRESH POTS!!!", "username": "Cafemachine", "icon_emoji": ":coffee:", "channel": "#vhx", "attachments": [{"image_url": "http://4.bp.blogspot.com/_8HV3Czzl5Vg/TES8nVaAEII/AAAAAAAAABY/L0iLGKPSKQ0/s1600/DaveGrohlFreshPots.jpg"}]}\' ' + freshpots_hook_url
+  # string = 'curl -X POST -H "Content-type: application/json" --data \'{"text": "FRESH POTS!!!", "username": "Cafemachine", "icon_emoji": ":coffee:", "channel": "#vhx", "attachments": [{"image_url": "http://4.bp.blogspot.com/_8HV3Czzl5Vg/TES8nVaAEII/AAAAAAAAABY/L0iLGKPSKQ0/s1600/DaveGrohlFreshPots.jpg"}]}\' ' + freshpots_hook_url
+  string = 'curl -X POST -H "Content-type: application/json" --data \'{"text": "FRESH POTS!!!", "username": "Cafemachine", "icon_emoji": ":coffee:", "channel": "#vhx"}\' ' + freshpots_hook_url
   # print string
   os.system(string)
   print
